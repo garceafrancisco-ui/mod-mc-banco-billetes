@@ -149,6 +149,7 @@ public class BanknotePrinterBlockEntity extends BaseContainerBlockEntity impleme
             if (output.isEmpty()) {
                 setItem(3, banknote);
             } else if (ItemStack.isSameItem(output, banknote) && 
+                       output.hasTag() &&
                        output.getTag().getString("NationCode").equals(this.currentCode)) {
                 output.grow(1);
                 setItem(3, output);
