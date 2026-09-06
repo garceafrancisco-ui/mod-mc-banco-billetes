@@ -1,7 +1,10 @@
 package com.nationcurrency.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
@@ -71,10 +74,12 @@ public class BanknotePrinterBlockEntityTicker implements BlockEntityTicker<Bankn
         
         // Crear un NBT con la información del billete
         ItemStack banknote = new ItemStack(com.nationcurrency.item.ModItems.BANKNOTE.get());
-        banknote.getOrCreateTag().putString("NationCode", code);
-        banknote.getOrCreateTag().putInt("ColorSeed", hashCode);
-        banknote.getOrCreateTag().putLong("TotalPrinted", 1);
-        
+        CompoundTag tag = new CompoundTag();
+        tag.putString("NationCode", code);
+        tag.putInt("ColorSeed", hashCode);
+        tag.putLong("TotalPrinted", 1);
+        banknote.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
         return banknote;
     }
 }

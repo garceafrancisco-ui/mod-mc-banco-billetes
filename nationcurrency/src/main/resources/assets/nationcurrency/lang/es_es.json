@@ -1,6 +1,8 @@
 {
   "block.nationcurrency.banknote_printer": "Impresora de Billetes",
+  "block.nationcurrency.printer_frame": "Marco de Impresora",
   "item.nationcurrency.banknote": "Billete",
   "item.nationcurrency.coin": "Moneda",
-  "container.nationcurrency.banknote_printer": "Impresora de Billetes"
+  "container.nationcurrency.banknote_printer": "Impresora de Billetes",
+  "message.nationcurrency.structure_incomplete": "La estructura 3x3x3 de Marcos de Impresora está incompleta"
 }

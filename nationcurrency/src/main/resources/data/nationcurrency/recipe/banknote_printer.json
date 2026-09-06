@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NGN",
+    "GDG",
+    "NGN"
+  ],
+  "key": {
+    "N": { "item": "minecraft:netherite_ingot" },
+    "G": { "item": "minecraft:gold_block" },
+    "D": { "item": "minecraft:diamond_block" }
+  },
+  "result": {
+    "id": "nationcurrency:banknote_printer",
+    "count": 1
+  }
+}

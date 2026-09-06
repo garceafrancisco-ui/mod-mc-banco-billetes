@@ -1,6 +1,7 @@
 package com.nationcurrency.menu;
 
 import com.nationcurrency.block.BanknotePrinterBlockEntity;
+import com.nationcurrency.block.ModBlocks;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +24,7 @@ public class BanknotePrinterMenu extends AbstractContainerMenu {
     }
     
     public BanknotePrinterMenu(int containerId, Inventory inventory, Level level, BlockPos pos) {
-        super(ModMenus.BANKNOTE_PRINTER_MENU.get(), containerId);
+        super(ModMenus.BANKNOTE_PRINTER_MENU, containerId);
         this.level = level;
         this.access = ContainerLevelAccess.create(level, pos);
         
@@ -94,7 +95,7 @@ public class BanknotePrinterMenu extends AbstractContainerMenu {
     
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.access, player, ModBlocks.BANKNOTE_PRINTER);
+        return stillValid(this.access, player, ModBlocks.BANKNOTE_PRINTER.get()) && blockEntity.isStructureFormed();
     }
     
     public BanknotePrinterBlockEntity getBlockEntity() {

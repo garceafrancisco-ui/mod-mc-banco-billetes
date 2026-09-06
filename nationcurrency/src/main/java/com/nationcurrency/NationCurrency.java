@@ -23,6 +23,11 @@ public class NationCurrency {
     public NationCurrency(IEventBus modEventBus) {
         modEventBus.register(this);
         
+        ModBlocks.register();
+        ModBlockEntities.register();
+        ModItems.register();
+        ModMenus.register();
+
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
@@ -34,7 +39,12 @@ public class NationCurrency {
     @SubscribeEvent
     public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(ModBlocks.BANKNOTE_PRINTER);
+            event.accept(ModItems.BANKNOTE_PRINTER_ITEM.get());
+            event.accept(ModItems.PRINTER_FRAME_ITEM.get());
+        }
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.BANKNOTE.get());
+            event.accept(ModItems.COIN.get());
         }
     }
 }

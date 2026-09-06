@@ -1,6 +1,8 @@
 {
   "block.nationcurrency.banknote_printer": "Banknote Printer",
+  "block.nationcurrency.printer_frame": "Printer Frame",
   "item.nationcurrency.banknote": "Banknote",
   "item.nationcurrency.coin": "Coin",
-  "container.nationcurrency.banknote_printer": "Banknote Printer"
+  "container.nationcurrency.banknote_printer": "Banknote Printer",
+  "message.nationcurrency.structure_incomplete": "The 3x3x3 Printer Frame structure is incomplete"
 }
