@@ -5,6 +5,7 @@ import com.nationcurrency.block.ModBlocks;
 import com.nationcurrency.block.ModBlockEntities;
 import com.nationcurrency.item.ModItems;
 import com.nationcurrency.menu.ModMenus;
+import com.nationcurrency.network.NetworkHandler;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -27,6 +28,7 @@ public class NationCurrency {
         ModBlockEntities.register();
         ModItems.register();
         ModMenus.register();
+        NetworkHandler.register();
 
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);

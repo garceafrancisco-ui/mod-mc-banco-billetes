@@ -18,15 +18,19 @@ public class BanknoteItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         CustomData data = stack.get(DataComponents.CUSTOM_DATA);
         if (data != null) {
             CompoundTag tag = data.copyTag();
             String code = tag.getString("NationCode");
             long printCount = tag.getLong("TotalPrinted");
 
-            tooltip.add(Component.literal("Código de Nación: " + code).withStyle(ChatFormatting.GOLD));
-            tooltip.add(Component.literal("Total Imprimido: " + printCount).withStyle(ChatFormatting.GREEN));
+            if (!code.isEmpty()) {
+                tooltip.add(Component.literal("Código de Nación: " + code).withStyle(ChatFormatting.GOLD));
+            }
+            if (printCount > 0) {
+                tooltip.add(Component.literal("Total Imprimido: " + printCount).withStyle(ChatFormatting.GREEN));
+            }
             tooltip.add(Component.literal("Billete Único").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }

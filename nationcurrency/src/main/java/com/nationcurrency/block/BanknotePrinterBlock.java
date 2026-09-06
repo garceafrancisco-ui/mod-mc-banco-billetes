@@ -52,4 +52,21 @@ public class BanknotePrinterBlock extends BaseEntityBlock {
         }
         return InteractionResult.SUCCESS;
     }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            // La estructura 3x3x3 se verifica automáticamente cuando se usa el bloque
+            // Si la impresora se rompe, la estructura deja de ser válida
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public <T extends net.minecraft.world.level.block.entity.BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(Level level, BlockState state) {
+        if (level.isClientSide) {
+            return null;
+        }
+        return (net.minecraft.world.level.block.entity.BlockEntityTicker<T>) new BanknotePrinterBlockEntityTicker();
+    }
 }

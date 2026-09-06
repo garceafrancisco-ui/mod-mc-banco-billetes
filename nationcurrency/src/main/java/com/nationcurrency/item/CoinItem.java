@@ -18,15 +18,19 @@ public class CoinItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         CustomData data = stack.get(DataComponents.CUSTOM_DATA);
         if (data != null) {
             CompoundTag tag = data.copyTag();
             String code = tag.getString("NationCode");
             int value = tag.getInt("CoinValue");
 
-            tooltip.add(Component.literal("Código de Nación: " + code).withStyle(ChatFormatting.GOLD));
-            tooltip.add(Component.literal("Valor: " + value).withStyle(ChatFormatting.GREEN));
+            if (!code.isEmpty()) {
+                tooltip.add(Component.literal("Código de Nación: " + code).withStyle(ChatFormatting.GOLD));
+            }
+            if (value > 0) {
+                tooltip.add(Component.literal("Valor: " + value).withStyle(ChatFormatting.GREEN));
+            }
             tooltip.add(Component.literal("Moneda de Oro").withStyle(ChatFormatting.ITALIC, ChatFormatting.YELLOW));
         }
     }

@@ -17,4 +17,11 @@ public class ModBlockEntities {
     public static void register() {
         // El registro ya ocurre arriba, al crear BANKNOTE_PRINTER.
     }
+    
+    /**
+     * Obtiene el ticker para la entidad de bloque de la impresora
+     */
+    public static <T extends BanknotePrinterBlockEntity> BanknotePrinterBlockEntityTicker getTicker() {
+        return new BanknotePrinterBlockEntityTicker();
+    }
 }

@@ -14,12 +14,15 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import com.nationcurrency.menu.BanknotePrinterMenu;
+import com.nationcurrency.item.ModItems;
 
 public class BanknotePrinterBlockEntity extends BaseContainerBlockEntity implements MenuProvider {
 
-    private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+    private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
     private String currentCode = "";
     private long totalPrinted = 0;
+    private int printProgress = 0;
+    private static final int PRINT_TIME = 200; // 10 segundos (20 ticks por segundo)
 
     public BanknotePrinterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BANKNOTE_PRINTER.get(), pos, state);
@@ -50,6 +53,7 @@ public class BanknotePrinterBlockEntity extends BaseContainerBlockEntity impleme
         super.saveAdditional(tag, registries);
         tag.putString("current_code", currentCode);
         tag.putLong("total_printed", totalPrinted);
+        tag.putInt("print_progress", printProgress);
     }
 
     @Override
@@ -57,6 +61,7 @@ public class BanknotePrinterBlockEntity extends BaseContainerBlockEntity impleme
         super.loadAdditional(tag, registries);
         currentCode = tag.getString("current_code");
         totalPrinted = tag.getLong("total_printed");
+        printProgress = tag.getInt("print_progress");
     }
 
     public String getCurrentCode() {
@@ -75,6 +80,92 @@ public class BanknotePrinterBlockEntity extends BaseContainerBlockEntity impleme
     public void incrementTotalPrinted() {
         this.totalPrinted++;
         setChanged();
+    }
+
+    public int getPrintProgress() {
+        return printProgress;
+    }
+
+    public int getMaxPrintTime() {
+        return PRINT_TIME;
+    }
+
+    /**
+     * Inicia el proceso de impresión
+     */
+    public void startPrinting() {
+        if (canPrint()) {
+            this.printProgress = 0;
+            setChanged();
+        }
+    }
+
+    /**
+     * Procesa un tick de impresión
+     */
+    public void tickPrinting() {
+        if (!isStructureFormed()) {
+            this.printProgress = 0;
+            return;
+        }
+
+        if (canPrint()) {
+            this.printProgress++;
+            if (this.printProgress >= PRINT_TIME) {
+                completePrinting();
+            }
+            setChanged();
+        } else {
+            this.printProgress = 0;
+            setChanged();
+        }
+    }
+
+    /**
+     * Verifica si se puede imprimir (hay papel y código establecido)
+     */
+    private boolean canPrint() {
+        ItemStack paper = getItem(0); // Slot de papel
+        ItemStack goldNugget = getItem(1); // Slot de pepita de oro
+        
+        // Se necesita papel y código establecido
+        return !paper.isEmpty() && !this.currentCode.isEmpty();
+    }
+
+    /**
+     * Completa la impresión y genera el billete/moneda
+     */
+    private void completePrinting() {
+        ItemStack paper = getItem(0);
+        ItemStack output = getItem(3); // Slot de salida
+        
+        if (!paper.isEmpty()) {
+            // Crear billete con datos
+            ItemStack banknote = new ItemStack(ModItems.BANKNOTE.get());
+            CompoundTag tag = banknote.getOrCreateTag();
+            tag.putString("NationCode", this.currentCode);
+            tag.putLong("TotalPrinted", this.totalPrinted + 1);
+            
+            if (output.isEmpty()) {
+                setItem(3, banknote);
+            } else if (ItemStack.isSameItem(output, banknote) && 
+                       output.getTag().getString("NationCode").equals(this.currentCode)) {
+                output.grow(1);
+                setItem(3, output);
+            } else {
+                // No se puede colocar el resultado
+                return;
+            }
+            
+            // Consumir papel
+            paper.shrink(1);
+            setItem(0, paper);
+            
+            // Incrementar contador
+            incrementTotalPrinted();
+            this.printProgress = 0;
+            setChanged();
+        }
     }
 
     /**
