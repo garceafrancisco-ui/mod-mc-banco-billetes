@@ -61,12 +61,4 @@ public class BanknotePrinterBlock extends BaseEntityBlock {
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
-
-    @Override
-    public <T extends net.minecraft.world.level.block.entity.BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(Level level, BlockState state) {
-        if (level.isClientSide) {
-            return null;
-        }
-        return (net.minecraft.world.level.block.entity.BlockEntityTicker<T>) new BanknotePrinterBlockEntityTicker();
-    }
 }

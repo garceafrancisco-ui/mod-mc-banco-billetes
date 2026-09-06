@@ -1,56 +1,89 @@
 ```
-# Compiled and build artifacts
+# Compiled files
 *.class
 *.o
 *.obj
-*.out
-*.dll
-*.so
-*.a
-*.pyc
-__pycache__/
 
 # Dependencies
-node_modules/
-venv/
-.venv/
-.mypy_cache/
-.pytest_cache/
-.gradle/
-target/
+lib/
+libs/
 
-# Build directories (common in Java/Minecraft projects)
+# Build artifacts
+target/
 build/
 dist/
+out/
 
-# Editors/IDEs
-.vscode/
+# IDE files
 .idea/
-*.swp
-*.swo
-
-# System files
-.DS_Store
-Thumbs.db
-*.tmp
+.vscode/
+*.iml
+*.iws
+*.ipr
 
 # Logs
 *.log
 
-# Environment files
+# Environment
 .env
 .env.local
 *.env.*
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Maven
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
 
 # Coverage reports
 coverage/
 htmlcov/
 .coverage
 
-# Minecraft/Java specific
-.run/
-*.iml
-*.iws
-*.ipr
-out/
+# Python specific (if applicable)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage*
+.nox/
+*.cover
+*.log
+!.coveragerc
+
+# Node specific (if applicable)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/node_modules/
+jspm_packages/
+
+# Database
+*.db
+*.db-journal
+
+# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 ```
