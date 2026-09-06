@@ -41,8 +41,11 @@ public class BanknotePrinterMenu extends AbstractContainerMenu {
         // Slot para pepitas de oro (input para monedas)
         this.addSlot(new Slot(blockEntity, 1, 44, 50));
         
+        // Slot para tinta (input adicional)
+        this.addSlot(new Slot(blockEntity, 2, 116, 50));
+        
         // Slot de salida para billetes/monedas
-        this.addSlot(new Slot(blockEntity, 2, 134, 50) {
+        this.addSlot(new Slot(blockEntity, 3, 134, 50) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -75,11 +78,11 @@ public class BanknotePrinterMenu extends AbstractContainerMenu {
             ItemStack original = slot.getItem();
             itemstack = original.copy();
             
-            if (index < 3) {
-                if (!this.moveItemStackTo(original, 3, this.slots.size(), true)) {
+            if (index < 4) {
+                if (!this.moveItemStackTo(original, 4, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(original, 0, 3, false)) {
+            } else if (!this.moveItemStackTo(original, 0, 4, false)) {
                 return ItemStack.EMPTY;
             }
             

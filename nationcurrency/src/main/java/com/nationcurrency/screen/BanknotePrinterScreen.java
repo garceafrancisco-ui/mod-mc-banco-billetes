@@ -55,8 +55,8 @@ public class BanknotePrinterScreen extends AbstractContainerScreen<BanknotePrint
     }
     
     private void sendPrintPacket() {
-        // Enviar paquete para iniciar impresión
-        PacketDistributor.sendToServer(new SetCodePacket(codeInput.getValue()));
+        // Enviar paquete especial para iniciar impresión
+        PacketDistributor.sendToServer(new SetCodePacket("PRINT"));
     }
     
     @Override
@@ -75,6 +75,19 @@ public class BanknotePrinterScreen extends AbstractContainerScreen<BanknotePrint
         // Mostrar información de billetes impresos
         long totalPrinted = getMenu().getBlockEntity().getTotalPrinted();
         guiGraphics.drawString(this.font, "Total: " + totalPrinted, 8, 60, 0x404040, false);
+        
+        // Mostrar barra de progreso
+        int progress = getMenu().getBlockEntity().getPrintProgress();
+        int maxProgress = getMenu().getBlockEntity().getMaxPrintTime();
+        if (progress > 0) {
+            String progressText = "Progreso: " + (progress * 100 / maxProgress) + "%";
+            guiGraphics.drawString(this.font, progressText, 8, 72, 0x404040, false);
+            
+            // Dibujar barra de progreso
+            int barWidth = (progress * 60) / maxProgress;
+            guiGraphics.fill(8, 82, 8 + barWidth, 86, 0xFF00FF00);
+            guiGraphics.fill(8 + barWidth, 82, 68, 86, 0xFF404040);
+        }
     }
     
     @Override

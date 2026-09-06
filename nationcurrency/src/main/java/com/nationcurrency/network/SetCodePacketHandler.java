@@ -13,7 +13,15 @@ public class SetCodePacketHandler {
             if (player.containerMenu instanceof com.nationcurrency.menu.BanknotePrinterMenu menu) {
                 BanknotePrinterBlockEntity blockEntity = menu.getBlockEntity();
                 if (blockEntity != null) {
-                    blockEntity.setCurrentCode(packet.getCode());
+                    String code = packet.getCode();
+                    
+                    // Si el código es "PRINT", iniciamos la impresión
+                    if ("PRINT".equals(code)) {
+                        blockEntity.startPrinting();
+                    } else {
+                        // Establecemos el código normalmente
+                        blockEntity.setCurrentCode(code);
+                    }
                 }
             }
         });
